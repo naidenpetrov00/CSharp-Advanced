@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class Startup
@@ -9,20 +10,34 @@
         static void Main(string[] args)
         {
             var hallsMaximumCapacity = int.Parse(Console.ReadLine());
-            var questsCode = Console.ReadLine()
+            var line = Console.ReadLine()
                 .Split(" ")
+                .Reverse()
                 .ToArray();
 
-            var halls = new Stack();
-            var people = new Stack();
+            var halls = new Dictionary<string, List<int>>();
+            var hall = string.Empty;
 
-            foreach (var item in questsCode)
+            for (int i = 0; i < line.Length; i++)
             {
-                if (item.GetType() == )
-                {
 
+                if (int.TryParse(line[i], out int number) && halls.Count() > 0)
+                {
+                    halls.
                 }
             }
+        }
+
+        static Stack StackAdder(string[] input)
+        {
+            var stack = new Stack();
+
+            foreach (var item in input)
+            {
+                stack.Push(item);
+            }
+
+            return stack;
         }
     }
 }
