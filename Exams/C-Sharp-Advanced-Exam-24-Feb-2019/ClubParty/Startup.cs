@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
 
     public class Startup
     {
@@ -29,16 +30,20 @@
             {
                 var resInfo = reservation.Pop().ToString();
 
-                if (halls.Count == 0)
+                if (openHalls.Count == 0)
                 {
                     continue;
                 }
 
-                if (int.TryParse(resInfo, out int number))
+                if (int.TryParse(resInfo, out int currReservation))
                 {
-                    if (PlaceChecker(halls, openHalls, number, hallsMaximumCapacity))
+                    if (PlaceChecker(halls, openHalls, currReservation, hallsMaximumCapacity))
                     {
-
+                        halls[openHalls.Peek().ToString()].Add(currReservation);
+                    }
+                    else
+                    {
+                        ClosedReservationPrinter(halls, openHalls);
                     }
                 }
                 else if (resInfo != null)
@@ -61,21 +66,28 @@
             return stack;
         }
 
-        private static bool PlaceChecker(Dictionary<string, List<int>> halls, Queue openHals, int number, int maxCapcity)
+        private static bool PlaceChecker(Dictionary<string, List<int>> halls, Queue openHals, int currReservation, int maxCapcity)
         {
             var capacity = 0;
 
-            foreach (var item in halls[openHals.Peek().ToString()])
+            foreach (var reservations in halls[openHals.Peek().ToString()])
             {
-                capacity += item;
+                capacity += reservations;
             }
 
-            if (capacity + number > maxCapcity)
+            if (capacity + currReservation > maxCapcity)
             {
                 return false;
             }
 
             return true;
+        }
+
+        private static void ClosedReservationPrinter(Dictionary<string, List<int>> halls, Queue openHalls)
+        {
+            var sb = new StringBuilder();
+
+
         }
     }
 }
