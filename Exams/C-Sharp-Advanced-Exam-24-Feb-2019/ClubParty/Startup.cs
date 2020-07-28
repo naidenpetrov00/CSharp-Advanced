@@ -11,10 +11,6 @@
         static void Main(string[] args)
         {
             var hallsMaximumCapacity = int.Parse(Console.ReadLine());
-            //var line = Console.ReadLine()
-            //    .Split(" ")
-            //    .Reverse()
-            //    .ToArray();
             var line = Console.ReadLine()
                 .Split(" ", StringSplitOptions.RemoveEmptyEntries)
                 .ToArray();
@@ -23,19 +19,13 @@
             var openHalls = new Queue();
 
             var halls = new Dictionary<string, List<int>>();
-            var hall = string.Empty;
             var resCount = reservation.Count;
 
             for (int i = 0; i < resCount; i++)
             {
                 var resInfo = reservation.Pop().ToString();
 
-                if (openHalls.Count == 0)
-                {
-                    continue;
-                }
-
-                if (int.TryParse(resInfo, out int currReservation))
+                if (int.TryParse(resInfo, out int currReservation) && openHalls.Count != 0)
                 {
                     if (PlaceChecker(halls, openHalls, currReservation, hallsMaximumCapacity))
                     {
@@ -43,10 +33,15 @@
                     }
                     else
                     {
-                        ClosedReservationPrinter(halls, openHalls);
+                        Console.WriteLine(ClosedReservationPrinter(halls, openHalls));
+
+                        if (openHalls.Count != 0)
+                        {
+                            halls[openHalls.Peek().ToString()].Add(currReservation);
+                        }
                     }
                 }
-                else if (resInfo != null)
+                else if (!int.TryParse(resInfo, out int number))
                 {
                     halls.Add(resInfo, new List<int>());
                     openHalls.Enqueue(resInfo);
@@ -83,11 +78,14 @@
             return true;
         }
 
-        private static void ClosedReservationPrinter(Dictionary<string, List<int>> halls, Queue openHalls)
+        private static string ClosedReservationPrinter(Dictionary<string, List<int>> halls, Queue openHalls)
         {
             var sb = new StringBuilder();
+            var closedRezervation = openHalls.Dequeue().ToString();
 
+            sb.Append(string.Format("{0} -> {1}", closedRezervation, string.Join(", ", halls[closedRezervation])));
 
+            return sb.ToString().Trim();
         }
     }
 }
