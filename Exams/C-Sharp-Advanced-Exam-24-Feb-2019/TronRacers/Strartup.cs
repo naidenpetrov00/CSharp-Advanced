@@ -5,23 +5,26 @@
 
     public class Strartup
     {
-        private const char FPlayerSymbol = 'f';
-        private const char SPlayerSymbol = 's';
-        private static int[] FPlayerPosition;
-        private static int[] SPlayerPosition;
+        const char FPlayerTag= 'f';
+        const char SPlayerTag= 's';
+        static int[] FPlayerPosition;
+        static int[] SPlayerPosition;
+        static char[,] Field;
 
         public static void Main(string[] args)
         {
             var size = int.Parse(Console.ReadLine());
-            var field = MatrixAdder(size);
+            Field = MatrixAdder(size);
+            PositionFinder(FPlayerTag, Field).CopyTo(FPlayerPosition, 0);
+            PositionFinder(SPlayerTag, Field).CopyTo(SPlayerPosition, 0);
 
-            var fPlayer = true;
-            var sPlayer = true;
+            var fPlayerLive = true;
+            var sPlayerLive = true;
             var commands = new string[] { };
             var fCommand = string.Empty;
             var sCommand = string.Empty;
 
-            while (fPlayer && sPlayer)
+            while (fPlayerLive && sPlayerLive)
             {
                 commands = Console.ReadLine()
                     .Split(' ')
@@ -29,13 +32,15 @@
                 fCommand = commands[0];
                 sCommand = commands[1];
 
+                MoveSeparator(FPlayerTag, fCommand);
+
 
             }
         }
 
-        static int[,] MatrixAdder(int size)
+        static char[,] MatrixAdder(int size)
         {
-            var matrix = new int[size, size];
+            var matrix = new char[size, size];
             var values = new char[] { };
 
             for (int i = 0; i < matrix.GetLength(0); i++)
@@ -50,22 +55,60 @@
             return matrix;
         }
 
-        static void PositionFinder(int[,] matrix)
+        static void MoveSeparator(char player, string command)
         {
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            switch (command)
             {
-                for (int k = 0; k < matrix.GetLength(1); k++)
+                case "up":
+                    Mover(player, (x, y) => new int[2] { x++, y });
+                    break;
+                case "right":
+                    break;
+                case "left":
+                    break;
+                case "down":
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        static void Mover(char player, Func<int, int, int[]> direction)
+        {
+            if (player == 'f')
+            {
+                var position = direction(FPlayerPosition[0], FPlayerPosition[1]);
+
+                if (position[0] > Field.GetLength(0))
                 {
-                    if (matrix[i, k] == FPlayerSymbol)
+                    Field[0, position[1]] = FPlayerTag;
+                }
+            }
+            else if(player == 's')
+            {
+
+            }
+        }
+
+        static int[] PositionFinder(char player, char[,] field)
+        {
+            var position = new int[2];
+
+            for (int i = 0; i < field.GetLength(0); i++)
+            {
+                for (int k = 0; k < field.GetLength(1); k++)
+                {
+                    if (field[i, k] == player)
                     {
-                        FPlayerPosition = new int[] { i, k };
-                    }
-                    if (matrix[i, k] == SPlayerSymbol)
-                    {
-                        SPlayerPosition = new int[] { i, k };
+                        position[0] = i;
+                        position[1] = k;
+
+                        break;
                     }
                 }
             }
+
+            return position;
         }
     }
 }
