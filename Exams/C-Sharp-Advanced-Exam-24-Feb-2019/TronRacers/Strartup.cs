@@ -105,11 +105,26 @@
                 SPlayerPosition = position;
             }
             //nagore i izleze
-            if (position[0] > Field.GetLength(0))
+            if (position[0] < 0)
+            {
+                if (EmptyPlaceChecker(Field[Field.GetLength(0) - 1, position[1]]))
+                {
+                    Field[Field.GetLength(0) - 1, position[1]] = player;
+                    PositionMover(player, Field.GetLength(0) - 1, position[1]);
+                }
+                else
+                {
+                    Field[Field.GetLength(0) - 1, position[1]] = DeathPlayerTag;
+                    AllPlayersAlive = false;
+                }
+            }
+            //nadolu izleze
+            else if (position[0] > Field.GetLength(0) - 1)
             {
                 if (EmptyPlaceChecker(Field[0, position[1]]))
                 {
                     Field[0, position[1]] = player;
+                    PositionMover(player, 0, position[1]);
                 }
                 else
                 {
@@ -117,53 +132,13 @@
                     AllPlayersAlive = false;
                 }
             }
-            ////nagore normalno
-            //else if (position[0] <= Field.GetLength(0))
-            //{
-            //    if (EmptyPlaceChecker(Field[position[0], position[1]]))
-            //    {
-            //        Field[position[0], position[1]] = player;
-
-            //    }
-            //    else
-            //    {
-            //        Field[position[0], position[1]] = DeathPlayerTag;
-            //        AllPlayersAlive = false;
-            //    }
-            //}
-            //nadolu izleze
-            else if (position[0] < 0)
-            {
-                if (EmptyPlaceChecker(Field[Field.GetLength(0), position[1]]))
-                {
-                    Field[Field.GetLength(0), position[1]] = player;
-
-                }
-                else
-                {
-                    Field[Field.GetLength(0), position[1]] = DeathPlayerTag;
-                    AllPlayersAlive = false;
-                }
-            }
-            ////nadolu normalno
-            //else if (position[0] >= 0)
-            //{
-            //    if (EmptyPlaceChecker(Field[position[0], position[1]]))
-            //    {
-            //        Field[position[0], position[1]] = player;
-            //    }
-            //    else
-            //    {
-            //        Field[position[0], position[1]] = DeathPlayerTag;
-            //        AllPlayersAlive = false;
-            //    }
-            //}
             //nadqsno izleze
-            else if (position[1] > Field.GetLength(1))
+            else if (position[1] > Field.GetLength(1) - 1)
             {
                 if (EmptyPlaceChecker(Field[position[0], 0]))
                 {
                     Field[position[0], 0] = player;
+                    PositionMover(player, position[0], 0);
                 }
                 else
                 {
@@ -171,31 +146,17 @@
                     AllPlayersAlive = false;
                 }
             }
-            ////nadsqno normalno
-            //else if (position[1] <= Field.GetLength(1))
-            //{
-            //    if (EmptyPlaceChecker(Field[position[0], position[1]]))
-            //    {
-            //        Field[position[0], position[1]] = player;
-
-            //    }
-            //    else
-            //    {
-            //        Field[position[0], position[1]] = DeathPlayerTag;
-            //        AllPlayersAlive = false;
-            //    }
-            //}
             //nalqvo izleze
             else if (position[1] < 0)
             {
-                if (EmptyPlaceChecker(Field[position[0], Field.GetLength(1)]))
+                if (EmptyPlaceChecker(Field[position[0], Field.GetLength(1) - 1]))
                 {
-                    Field[position[0], Field.GetLength(1)] = player;
-
+                    Field[position[0], Field.GetLength(1) - 1] = player;
+                    PositionMover(player, position[0], Field.GetLength(1) - 1);
                 }
                 else
                 {
-                    Field[position[0], Field.GetLength(1)] = DeathPlayerTag;
+                    Field[position[0], Field.GetLength(1) - 1] = DeathPlayerTag;
                     AllPlayersAlive = false;
                 }
             }
@@ -204,7 +165,7 @@
                 if (EmptyPlaceChecker(Field[position[0], position[1]]))
                 {
                     Field[position[0], position[1]] = player;
-
+                    PositionMover(player, position[0], position[1]);
                 }
                 else
                 {
@@ -212,20 +173,6 @@
                     AllPlayersAlive = false;
                 }
             }
-            ////nalqvo normalno
-            //else if (position[1] >= 0)
-            //{
-            //    if (EmptyPlaceChecker(Field[position[0], position[1]]))
-            //    {
-            //        Field[position[0], position[1]] = player;
-
-            //    }
-            //    else
-            //    {
-            //        Field[position[0], position[1]] = DeathPlayerTag;
-            //        AllPlayersAlive = false;
-            //    }
-            //}
 
         }
         static int[] PositionFinder(char player, char[,] field)
@@ -257,6 +204,18 @@
             }
 
             return false;
+        }
+
+        static void PositionMover(char player, params int[] position)
+        {
+            if (player == FPlayerTag)
+            {
+                FPlayerPosition = position;
+            }
+            else if (player == SPlayerTag)
+            {
+                SPlayerPosition = position;
+            }
         }
 
     }
