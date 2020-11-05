@@ -6,8 +6,7 @@ namespace Heroes
     public class StartUp
     {
         public static void Main()
-        {
-            //Initialize the repository
+        {//Initialize the repository
             HeroRepository repository = new HeroRepository();
             //Initialize entity
             Item item = new Item(23, 35, 48);

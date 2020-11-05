@@ -39,6 +39,7 @@ namespace Heroes
                 if (item.Item.Stength > max)
                 {
                     hero = item;
+                    max = item.Item.Stength;
                 }
             }
 
@@ -55,6 +56,7 @@ namespace Heroes
                 if (item.Item.Ability > max)
                 {
                     hero = item;
+                    max = item.Item.Ability;
                 }
             }
 
@@ -71,6 +73,7 @@ namespace Heroes
                 if (item.Item.Intelligence > max)
                 {
                     hero = item;
+                    max = item.Item.Intelligence;
                 }
             }
 
