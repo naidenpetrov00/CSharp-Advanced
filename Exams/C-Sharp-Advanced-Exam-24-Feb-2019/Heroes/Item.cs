@@ -12,12 +12,12 @@ namespace Heroes
 
         public Item(int strength, int ability, int intelligence)
         {
-            this.Stength = strength;
+            this.Strength = strength;
             this.Ability = ability;
             this.Intelligence = intelligence;
         }
 
-        public int Stength
+        public int Strength
         {
             get{ return this.strength; } 
             private set { this.strength = value; } 
@@ -40,9 +40,9 @@ namespace Heroes
             var sb = new StringBuilder();
 
             sb.AppendLine("Item:");
-            sb.AppendLine($"  * Strength: {this.Stength}");
-            sb.AppendLine($"  * Ability: {this.Ability}");
-            sb.AppendLine($"  * Intelligence: {this.Intelligence}");
+            sb.AppendLine($"  * Strength: {this.Strength}");
+            sb.AppendLine($"  * Ability {this.Ability}");
+            sb.Append($"  * Intelligence {this.Intelligence}");
 
             return sb.ToString().Trim();
         }

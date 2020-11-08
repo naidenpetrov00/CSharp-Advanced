@@ -7,16 +7,16 @@ namespace Heroes
 {
     public class HeroRepository
     {
-        private List<Hero> data;
+        private readonly List<Hero> data;
 
         public HeroRepository()
         {
             this.data = new List<Hero>();
         }
 
-        public IReadOnlyCollection<Hero> Data => (IReadOnlyCollection<Hero>)this.data;
+       // public IReadOnlyCollection<Hero> Data => (IReadOnlyCollection<Hero>)this.data;
 
-        public int Count => Data.Count;
+        public int Count => this.data.Count;
 
         public void Add(Hero hero)
         {
@@ -36,10 +36,10 @@ namespace Heroes
 
             foreach (var item in this.data)
             {
-                if (item.Item.Stength > max)
+                if (item.Item.Strength > max)
                 {
                     hero = item;
-                    max = item.Item.Stength;
+                    max = item.Item.Strength;
                 }
             }
 
