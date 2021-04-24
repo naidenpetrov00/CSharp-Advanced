@@ -18,10 +18,18 @@
                 .Split(" ", StringSplitOptions.RemoveEmptyEntries)
                 .ToArray();
 
-            var integerInput = int.Parse(integerDouble[0]);
-            var doubleInput = double.Parse(integerDouble[1]);
+            var tupleOne = new Tuple<string, string>(nameAdress[0], nameAdress[1]);
+            var tupleTwo = new Tuple<string, int>(nameBeerCapacity[0], int.Parse(nameBeerCapacity[1]));
+            var tupleThree = new Tuple<int, double>(int.Parse(integerDouble[0]), double.Parse(integerDouble[1]));
 
-            var tupleOne = new MyTuple<>(nameAdress[0], nameAdress[1]);
+            Printer(tupleOne, tupleTwo, tupleThree);
+        }
+
+        public static void Printer(Tuple<string, string> tupleOne, Tuple<string, int> tupleTwo, Tuple<int, double> tupleThree)
+        {
+            Console.WriteLine(tupleOne.ToString());
+            Console.WriteLine(tupleTwo.ToString());
+            Console.WriteLine(tupleThree.ToString());
         }
     }
 }

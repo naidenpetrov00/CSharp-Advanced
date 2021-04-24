@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public class MyTuple<T,K>
+    public class Tuple<T, K>
     {
         private T item1;
         private K item2;
 
-        public MyTuple(T item1, K item2)
+        public Tuple(T item1, K item2)
         {
             this.Item1 = item1;
             this.Item2 = item2;
@@ -31,7 +31,7 @@
         {
             var sb = new StringBuilder();
 
-            sb.Append(string.Format($"{0} > {1}", this.Item1, this.Item2));
+            sb.Append(string.Format("{0} -> {1}", this.Item1, this.Item2));
 
             return sb.ToString().Trim();
         }
