@@ -199,7 +199,7 @@
             }
             else if (direction == Right)
             {
-                if (armyPosition[1] + 1 > world.GetLength(1))
+                if (armyPosition[1] + 1 > world[armyPosition[1]].Length)
                 {
                     ArmyArmor--;
                     DeathMarker(world, armyPosition);
