@@ -64,7 +64,7 @@
 
         public void Add(Car car)
         {
-            if (!this.participants.Contains(car) && this.participants.Count < this.Capacity && car.HorsePower <= this.MaxHorsePower)
+            if (!this.participants.Contains(car) && this.Count < this.Capacity && car.HorsePower <= this.MaxHorsePower)
             {
                 this.participants.Add(car);
             }
@@ -84,7 +84,7 @@
         }
         public Car GetMostPowerfulCar()
         {
-            if (this.Participants.Count == 0)
+            if (this.Count == 0)
             {
                 return null;
             }
@@ -109,8 +109,6 @@
             {
                 if (item.LicensePlate.Equals(licensePlate))
                 {
-                    this.participants.Remove(item);
-
                     return true;
                 }
             }
@@ -123,7 +121,7 @@
 
             sb.AppendLine($"Race: {this.Name} - Type: {this.Type} (Laps: {this.Laps})");
 
-            this.participants.ForEach(c => sb.AppendLine(c.ToString()));
+            this.participants.ForEach(c => sb.AppendLine(c.ToString().Trim()));
 
             return sb.ToString().Trim();
 
